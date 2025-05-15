@@ -9,20 +9,37 @@ export default function QRScanner() {
   const [scannedCode, setScannedCode] = useState(null);
   const router = useRouter();
   const qrScannerRef = useRef(null);
+  const lastDetectedRef = useRef('');
+  const cooldownRef = useRef(false);
 
   useEffect(() => {
     if (videoRef.current) {
       qrScannerRef.current = new QrScanner(
         videoRef.current,
         result => {
-          console.log('QR Code detetado:', result.data);
-          setScannedCode(result.data);
+          // Evitar repetições frequentes do mesmo código
+          if (cooldownRef.current) return;
           
-          // Não redirecionamos automaticamente para permitir ver o QR code detetado
+          const currentCode = result.data;
+          
+          // Se for o mesmo código, ignorar
+          if (currentCode === lastDetectedRef.current) return;
+          
+          // Registrar o código detetado
+          lastDetectedRef.current = currentCode;
+          console.log('QR Code detetado:', currentCode);
+          setScannedCode(currentCode);
+          
+          // Definir um cooldown para evitar múltiplas deteções muito rápidas
+          cooldownRef.current = true;
+          setTimeout(() => {
+            cooldownRef.current = false;
+          }, 1000);
         },
         {
           highlightScanRegion: true,
           highlightCodeOutline: true,
+          willReadFrequently: true, // Adicionado para otimização
         }
       );
 
