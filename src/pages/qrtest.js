@@ -35,14 +35,18 @@ export default function QRTest() {
         </div>
 
         <div style={{ marginTop: '2rem' }}>
-          <Link href="/ar" className={styles.button}>
-            Aceder Diretamente à Experiência AR
+          <Link href="/ar">
+            <a className={styles.button}>
+              Aceder Diretamente à Experiência AR
+            </a>
           </Link>
         </div>
 
         <div style={{ marginTop: '1rem' }}>
-          <Link href="/" className={styles.backButton}>
-            Voltar à Página Inicial
+          <Link href="/">
+            <a className={styles.backButton}>
+              Voltar à Página Inicial
+            </a>
           </Link>
         </div>
       </main>
