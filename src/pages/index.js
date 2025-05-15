@@ -1,5 +1,6 @@
 import { useRouter } from 'next/router';
 import Head from 'next/head';
+import Link from 'next/link';
 import styles from '../styles/Home.module.css';
 
 export default function Home() {
@@ -32,6 +33,16 @@ export default function Home() {
         >
           Iniciar Scanner QR
         </button>
+
+        <div style={{ marginTop: '2rem', display: 'flex', flexDirection: 'column', gap: '1rem' }}>
+          <Link href="/ar" className={styles.buttonSecondary}>
+            Aceder Diretamente à Experiência AR
+          </Link>
+          
+          <Link href="/qrtest" className={styles.buttonSecondary}>
+            Ver QR Code para Teste
+          </Link>
+        </div>
       </main>
     </div>
   );

@@ -16,7 +16,7 @@ export default function ARViewer() {
       // Adiciona script de AR após o A-Frame carregar
       aframeScript.onload = () => {
         const arScript = document.createElement('script');
-        arScript.src = 'https://raw.githack.com/AR-js-org/AR.js/master/aframe/build/aframe-ar.js';
+        arScript.src = 'https://raw.githack.com/AR-js-org/AR.js/master/aframe/build/aframe-ar-nft.js';
         document.head.appendChild(arScript);
       };
     }
@@ -41,23 +41,28 @@ export default function ARViewer() {
       {/* A-Frame Scene para AR */}
       <a-scene
         embedded
-        arjs="sourceType: webcam; debugUIEnabled: false; detectionMode: mono_and_matrix; matrixCodeType: 3x3;"
+        arjs="sourceType: webcam; debugUIEnabled: false;"
         vr-mode-ui="enabled: false"
+        renderer="logarithmicDepthBuffer: true;"
       >
-        {/* Modelo 3D que será mostrado sobre o marcador */}
-        <a-entity
-          gltf-model="/models/meuModelo.glb"
-          scale="0.5 0.5 0.5"
-          position="0 0 0"
-          rotation="0 0 0"
-        ></a-entity>
+        {/* Usar o target.mind como marcador e GELATI.glb como modelo 3D */}
+        <a-nft
+          type="nft"
+          url="/targets/target.mind"
+          smooth="true"
+          smoothCount="10"
+          smoothTolerance="0.01"
+          smoothThreshold="5"
+        >
+          <a-entity
+            gltf-model="/models/GELATI.glb"
+            scale="5 5 5"
+            position="0 0 0"
+            rotation="-90 0 0"
+          ></a-entity>
+        </a-nft>
 
-        {/* Marcador padrão (pode ser personalizado) */}
-        <a-marker preset="hiro">
-          {/* Conteúdo do marcador */}
-        </a-marker>
-
-        {/* Câmara */}
+        {/* Câmara com rastreamento de posição */}
         <a-entity camera></a-entity>
       </a-scene>
 

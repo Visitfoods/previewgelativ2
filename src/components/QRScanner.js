@@ -14,13 +14,9 @@ export default function QRScanner() {
       qrScannerRef.current = new QrScanner(
         videoRef.current,
         result => {
-          // Verificar se o resultado é 'gelato-ar' ou outro valor específico
-          if (result.data === 'gelato-ar') {
-            // Redirecionar para a página AR
-            router.push('/ar');
-          } else {
-            setError('QR code inválido. Por favor, tente outro.');
-          }
+          console.log('QR Code detetado:', result.data);
+          // Aceitar qualquer QR code e redirecionar para a página AR
+          router.push('/ar');
         },
         {
           highlightScanRegion: true,
@@ -44,7 +40,7 @@ export default function QRScanner() {
   return (
     <div className={styles.container}>
       <h1 className={styles.title}>Scanner QR</h1>
-      <p className={styles.instructions}>Aponte a câmara para um QR code válido</p>
+      <p className={styles.instructions}>Aponte a câmara para um QR code</p>
       
       {error && <p className={styles.error}>{error}</p>}
       
