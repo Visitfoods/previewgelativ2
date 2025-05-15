@@ -6,6 +6,7 @@ import styles from '../styles/QRScanner.module.css';
 export default function QRScanner() {
   const videoRef = useRef(null);
   const [error, setError] = useState('');
+  const [scannedCode, setScannedCode] = useState(null);
   const router = useRouter();
   const qrScannerRef = useRef(null);
 
@@ -15,8 +16,9 @@ export default function QRScanner() {
         videoRef.current,
         result => {
           console.log('QR Code detetado:', result.data);
-          // Aceitar qualquer QR code e redirecionar para a página AR
-          router.push('/ar');
+          setScannedCode(result.data);
+          
+          // Não redirecionamos automaticamente para permitir ver o QR code detetado
         },
         {
           highlightScanRegion: true,
@@ -35,7 +37,13 @@ export default function QRScanner() {
         qrScannerRef.current.stop();
       }
     };
-  }, [router]);
+  }, []);
+
+  const handleOpenAR = () => {
+    // Armazenar o código escaneado para uso posterior, se necessário
+    sessionStorage.setItem('scannedQrCode', scannedCode || '');
+    router.push('/ar');
+  };
 
   return (
     <div className={styles.container}>
@@ -47,6 +55,18 @@ export default function QRScanner() {
       <div className={styles.videoContainer}>
         <video ref={videoRef} className={styles.video} />
       </div>
+      
+      {scannedCode && (
+        <div className={styles.scannedInfo}>
+          <p>QR Code detetado: <strong>{scannedCode}</strong></p>
+          <button 
+            className={styles.arButton}
+            onClick={handleOpenAR}
+          >
+            Continuar para AR
+          </button>
+        </div>
+      )}
       
       <button 
         className={styles.backButton}

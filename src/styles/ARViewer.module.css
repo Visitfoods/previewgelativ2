@@ -26,6 +26,28 @@
   background-color: rgba(0, 0, 0, 0.9);
 }
 
+.modeToggleContainer {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  z-index: 1000;
+}
+
+.modeToggleButton {
+  background-color: rgba(0, 0, 0, 0.7);
+  color: white;
+  border: none;
+  border-radius: 5px;
+  padding: 0.8rem 1.5rem;
+  font-size: 0.9rem;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.modeToggleButton:hover {
+  background-color: rgba(0, 0, 0, 0.9);
+}
+
 .instructions {
   position: absolute;
   bottom: 30px;
