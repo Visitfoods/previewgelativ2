@@ -35,34 +35,24 @@ export default function Home() {
         </button>
 
         <div style={{ marginTop: '2rem', display: 'flex', flexDirection: 'column', gap: '1rem' }}>
-          <Link href="/mindar">
-            <a className={styles.buttonPrimary}>
-              Experiência AR Melhorada (Recomendado)
-            </a>
+          <Link href="/mindar" className={styles.buttonPrimary}>
+            Experiência AR Melhorada (Recomendado)
           </Link>
           
-          <Link href="/ar">
-            <a className={styles.buttonSecondary}>
-              Aceder à Experiência AR (A-Frame)
-            </a>
+          <Link href="/ar" className={styles.buttonSecondary}>
+            Aceder à Experiência AR (A-Frame)
           </Link>
           
-          <Link href="/qrtest">
-            <a className={styles.buttonSecondary}>
-              Ver QR Code para Teste
-            </a>
+          <Link href="/qrtest" className={styles.buttonSecondary}>
+            Ver QR Code para Teste
           </Link>
           
-          <Link href="/modelo">
-            <a className={styles.buttonSecondary}>
-              Visualizar Modelo 3D
-            </a>
+          <Link href="/modelo" className={styles.buttonSecondary}>
+            Visualizar Modelo 3D
           </Link>
           
-          <Link href="/simples">
-            <a className={styles.buttonSecondary}>
-              Teste Simples (Apenas Modelo)
-            </a>
+          <Link href="/simples" className={styles.buttonSecondary}>
+            Teste Simples (Apenas Modelo)
           </Link>
         </div>
       </main>

@@ -13,10 +13,8 @@ export default function SimplesViewer() {
       </Head>
 
       <div style={{ position: 'fixed', top: 20, left: 20, zIndex: 10 }}>
-        <Link href="/">
-          <a className={styles.backButton}>
-            Voltar
-          </a>
+        <Link href="/" className={styles.backButton}>
+          Voltar
         </Link>
       </div>
 

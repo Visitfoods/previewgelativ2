@@ -22,10 +22,8 @@ export default function ModeloViewer() {
       </Head>
 
       <div style={{ position: 'fixed', top: 20, left: 20, zIndex: 1000 }}>
-        <Link href="/">
-          <a className={styles.backButton}>
-            Voltar à Página Inicial
-          </a>
+        <Link href="/" className={styles.backButton}>
+          Voltar à Página Inicial
         </Link>
       </div>
 
