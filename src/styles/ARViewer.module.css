@@ -1,0 +1,46 @@
+.arContainer {
+  position: relative;
+  width: 100vw;
+  height: 100vh;
+}
+
+.backButtonContainer {
+  position: absolute;
+  top: 20px;
+  left: 20px;
+  z-index: 1000;
+}
+
+.backButton {
+  background-color: rgba(0, 0, 0, 0.7);
+  color: white;
+  border: none;
+  border-radius: 5px;
+  padding: 0.8rem 1.5rem;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.backButton:hover {
+  background-color: rgba(0, 0, 0, 0.9);
+}
+
+.instructions {
+  position: absolute;
+  bottom: 30px;
+  left: 0;
+  right: 0;
+  text-align: center;
+  z-index: 1000;
+}
+
+.instructions p {
+  background-color: rgba(0, 0, 0, 0.7);
+  color: white;
+  font-size: 1.2rem;
+  padding: 0.8rem 1.5rem;
+  border-radius: 25px;
+  display: inline-block;
+  margin: 0 auto;
+} 

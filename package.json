@@ -1,0 +1,25 @@
+{
+  "name": "gelatomaniaarv2",
+  "version": "1.0.0",
+  "description": "App de Realidade Aumentada com scanner QR",
+  "main": "index.js",
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "next lint"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "module",
+  "dependencies": {
+    "aframe": "^1.7.1",
+    "aframe-ar": "^0.2.1-a",
+    "next": "^15.3.2",
+    "qr-scanner": "^1.4.2",
+    "react": "^19.1.0",
+    "react-dom": "^19.1.0",
+    "three": "^0.176.0"
+  }
+}
