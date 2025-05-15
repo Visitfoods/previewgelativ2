@@ -1,12 +1,16 @@
 import { useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
 import Head from 'next/head';
+import Script from 'next/script';
 import styles from '../styles/ARViewer.module.css';
 
 export default function ARViewer() {
   const router = useRouter();
   const [isLoading, setIsLoading] = useState(true);
   const [arMode, setArMode] = useState('hiro'); // Começar com 'hiro' por ser mais confiável
+  const [scriptsLoaded, setScriptsLoaded] = useState(false);
+  const [aframeLoaded, setAframeLoaded] = useState(false);
+  const [arjsLoaded, setArjsLoaded] = useState(false);
 
   useEffect(() => {
     // Definir um timeout para mostrar a mensagem de carregamento por pelo menos 2 segundos
@@ -17,7 +21,18 @@ export default function ARViewer() {
     return () => clearTimeout(timer);
   }, []);
 
+  // Verificar quando ambos os scripts estão carregados
+  useEffect(() => {
+    if (aframeLoaded && arjsLoaded) {
+      console.log('Todos os scripts carregados');
+      setScriptsLoaded(true);
+    }
+  }, [aframeLoaded, arjsLoaded]);
+
   const toggleArMode = () => {
+    // Reiniciar o estado de carregamento ao mudar de modo
+    setArjsLoaded(false);
+    setScriptsLoaded(false);
     setArMode(prevMode => prevMode === 'target' ? 'hiro' : 'target');
   };
 
@@ -35,13 +50,6 @@ export default function ARViewer() {
   return (
     <>
       <Head>
-        {/* Scripts A-Frame e AR.js carregados diretamente no head */}
-        <script src="https://aframe.io/releases/1.0.4/aframe.min.js"></script>
-        {arMode === 'target' ? (
-          <script src="https://raw.githack.com/AR-js-org/AR.js/master/aframe/build/aframe-ar-nft.js"></script>
-        ) : (
-          <script src="https://raw.githack.com/AR-js-org/AR.js/master/aframe/build/aframe-ar.js"></script>
-        )}
         <style>{`
           body {
             margin: 0;
@@ -52,6 +60,30 @@ export default function ARViewer() {
           }
         `}</style>
       </Head>
+
+      {/* Carrega A-Frame primeiro */}
+      <Script
+        src="https://aframe.io/releases/1.2.0/aframe.min.js"
+        strategy="beforeInteractive"
+        onLoad={() => {
+          console.log('A-Frame carregado');
+          setAframeLoaded(true);
+        }}
+      />
+
+      {/* Carrega AR.js depois */}
+      <Script
+        src={
+          arMode === 'target'
+            ? 'https://raw.githack.com/AR-js-org/AR.js/master/aframe/build/aframe-ar-nft.js'
+            : 'https://raw.githack.com/AR-js-org/AR.js/master/aframe/build/aframe-ar.js'
+        }
+        strategy="afterInteractive"
+        onLoad={() => {
+          console.log('AR.js carregado');
+          setArjsLoaded(true);
+        }}
+      />
 
       <div className={styles.arContainer}>
         <div className={styles.backButtonContainer}>
@@ -72,8 +104,13 @@ export default function ARViewer() {
           </button>
         </div>
 
-        {arMode === 'target' ? (
-          <div id="arScene" dangerouslySetInnerHTML={{ __html: `
+        {!scriptsLoaded ? (
+          <div className={styles.loadingContainer}>
+            <h2>A carregar scripts AR...</h2>
+            <p>Por favor aguarde enquanto os scripts necessários são carregados</p>
+          </div>
+        ) : arMode === 'target' ? (
+          <div id="arScene">
             <a-scene
               embedded
               arjs="sourceType: webcam; debugUIEnabled: false;"
@@ -98,9 +135,9 @@ export default function ARViewer() {
               </a-nft>
               <a-entity camera></a-entity>
             </a-scene>
-          `}} />
+          </div>
         ) : (
-          <div id="arScene" dangerouslySetInnerHTML={{ __html: `
+          <div id="arScene">
             <a-scene
               embedded
               arjs="sourceType: webcam; debugUIEnabled: false; detectionMode: mono_and_matrix; matrixCodeType: 3x3;"
@@ -117,7 +154,7 @@ export default function ARViewer() {
               </a-marker>
               <a-entity camera></a-entity>
             </a-scene>
-          `}} />
+          </div>
         )}
 
         <div className={styles.instructions}>
