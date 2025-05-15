@@ -1,50 +1,103 @@
 # Gelatomania AR
 
-Este é um projeto de Realidade Aumentada que permite escanear QR codes para visualizar modelos 3D em AR.
+Aplicação de Realidade Aumentada (AR) com scanner QR para visualização de modelos 3D.
+
+## Descrição
+
+Gelatomania AR é um MVP (Produto Mínimo Viável) que permite aos utilizadores escanear códigos QR e visualizar modelos 3D em realidade aumentada. A aplicação foi desenvolvida utilizando Next.js, React, Three.js e bibliotecas AR como MindAR e A-Frame.
 
 ## Funcionalidades
 
-- Página inicial com botão para iniciar o scanner de QR code
-- Scanner de QR code que lê códigos e redireciona para a experiência AR
-- Experiência AR que mostra um modelo 3D sobre uma imagem alvo
+- Scanner de códigos QR
+- Visualização de modelos 3D em realidade aumentada
+- Múltiplas abordagens de AR (MindAR, A-Frame AR.js)
+- Visualização simples de modelos 3D (sem AR)
+- Interface de utilizador intuitiva e responsiva
 
 ## Tecnologias Utilizadas
 
-- Next.js como framework principal
-- QR Scanner para leitura de QR codes
-- A-Frame e AR.js para a experiência de Realidade Aumentada
-- Three.js para renderização 3D
+- **Next.js** - Framework React para renderização do lado do servidor
+- **React** - Biblioteca JavaScript para construção de interfaces
+- **Three.js** - Biblioteca para gráficos 3D na web
+- **MindAR** - Biblioteca de AR baseada em imagens
+- **A-Frame** - Framework para experiências de realidade virtual
+- **QR Scanner** - Biblioteca para leitura de códigos QR
 
-## Como Executar
+## Estrutura do Projeto
 
-1. Instale as dependências:
-   ```
-   npm install
-   ```
+```
+GelatomaniaARV2/
+├── public/
+│   ├── models/         # Modelos 3D (.glb)
+│   └── targets/        # Marcadores para AR (.mind)
+├── src/
+│   ├── components/     # Componentes React reutilizáveis
+│   ├── pages/          # Páginas da aplicação
+│   └── styles/         # Estilos CSS
+├── .next/              # Arquivos de build do Next.js
+├── next.config.js      # Configuração do Next.js
+├── package.json        # Dependências do projeto
+└── README.md           # Documentação
+```
 
-2. Execute o servidor de desenvolvimento:
-   ```
-   npm run dev
-   ```
+## Instalação
 
-3. Acesse a aplicação em `http://localhost:3000`
+1. Clone o repositório:
+```bash
+git clone https://github.com/seu-usuario/GelatomaniaARV2.git
+cd GelatomaniaARV2
+```
 
-## Preparação para Teste
+2. Instale as dependências:
+```bash
+npm install
+```
 
-1. Para testar a funcionalidade AR, você precisará:
-   - Criar um QR code com o texto "gelato-ar"
-   - Ter um marcador Hiro padrão ou criar um marcador personalizado
-   - Adicionar seu modelo 3D na pasta `public/models/` com o nome `meuModelo.glb`
+3. Execute o servidor de desenvolvimento:
+```bash
+npm run dev
+```
 
-2. Para marcadores personalizados:
-   - Crie uma imagem para usar como marcador
-   - Use o MindAR Image Target Compiler online
-   - Baixe o arquivo .mind gerado e coloque em `public/targets/target.mind`
+4. Aceda à aplicação em `http://localhost:3000`
 
-## Desenvolvimento
+## Como Utilizar
 
-Para modificar o projeto:
+1. Na página inicial, clique em "Iniciar Scanner QR" ou "Experiência AR Melhorada"
+2. Se escolher o scanner QR, aponte a câmara para um código QR válido
+3. Após a deteção do código QR, clique em "Continuar para AR"
+4. Na experiência AR, aponte a câmara para o marcador (target)
+5. O modelo 3D aparecerá sobre o marcador
 
-- Edite os componentes em `src/components/`
-- Modifique as páginas em `src/pages/`
-- Personalize os estilos em `src/styles/` 
+## Modos de AR Disponíveis
+
+### 1. MindAR (Recomendado)
+- Baseado em reconhecimento de imagens
+- Mais estável e preciso
+- Melhor desempenho em dispositivos móveis
+
+### 2. A-Frame AR.js
+- Dois modos disponíveis:
+  - Marcador personalizado (target.mind)
+  - Marcador padrão Hiro
+
+### 3. Visualização Simples
+- Visualização do modelo 3D sem AR
+- Útil para testar o modelo
+
+## Resolução de Problemas
+
+Se encontrar problemas com a experiência AR:
+
+1. **Certifique-se de que tem boa iluminação**
+2. **Mantenha o dispositivo estável**
+3. **Ajuste a distância ao marcador**
+4. **Verifique se o seu dispositivo suporta WebAR**
+5. **Experimente diferentes modos de AR disponíveis na aplicação**
+
+## Licença
+
+ISC
+
+## Contacto
+
+Para questões ou sugestões, entre em contacto connosco através de [email@exemplo.com](mailto:email@exemplo.com). 

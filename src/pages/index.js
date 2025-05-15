@@ -35,9 +35,15 @@ export default function Home() {
         </button>
 
         <div style={{ marginTop: '2rem', display: 'flex', flexDirection: 'column', gap: '1rem' }}>
+          <Link href="/mindar">
+            <a className={styles.buttonPrimary}>
+              Experiência AR Melhorada (Recomendado)
+            </a>
+          </Link>
+          
           <Link href="/ar">
             <a className={styles.buttonSecondary}>
-              Aceder Diretamente à Experiência AR
+              Aceder à Experiência AR (A-Frame)
             </a>
           </Link>
           

@@ -59,7 +59,9 @@ export default function QRScanner() {
   const handleOpenAR = () => {
     // Armazenar o código escaneado para uso posterior, se necessário
     sessionStorage.setItem('scannedQrCode', scannedCode || '');
-    router.push('/ar');
+    
+    // Redirecionar para a experiência MindAR (melhorada)
+    router.push('/mindar');
   };
 
   return (
