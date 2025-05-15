@@ -46,6 +46,12 @@ export default function Home() {
               Ver QR Code para Teste
             </a>
           </Link>
+          
+          <Link href="/modelo">
+            <a className={styles.buttonSecondary}>
+              Visualizar Modelo 3D
+            </a>
+          </Link>
         </div>
       </main>
     </div>
