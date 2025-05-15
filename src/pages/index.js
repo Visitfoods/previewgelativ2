@@ -52,6 +52,12 @@ export default function Home() {
               Visualizar Modelo 3D
             </a>
           </Link>
+          
+          <Link href="/simples">
+            <a className={styles.buttonSecondary}>
+              Teste Simples (Apenas Modelo)
+            </a>
+          </Link>
         </div>
       </main>
     </div>
