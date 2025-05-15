@@ -1,14 +1,11 @@
 import { useEffect, useState, useRef } from 'react';
 import Head from 'next/head';
-import Script from 'next/script';
 import { useRouter } from 'next/router';
 import styles from '../styles/Home.module.css';
 
 export default function MindARPage() {
   const [isLoading, setIsLoading] = useState(true);
   const [isStarted, setIsStarted] = useState(false);
-  const [scriptsLoaded, setScriptsLoaded] = useState(false);
-  const [scriptCount, setScriptCount] = useState(0);
   const sceneRef = useRef(null);
   const router = useRouter();
 
@@ -26,18 +23,6 @@ export default function MindARPage() {
       }
     };
   }, []);
-
-  // Verificar quando todos os scripts estão carregados
-  useEffect(() => {
-    if (scriptCount === 3) {
-      setScriptsLoaded(true);
-    }
-  }, [scriptCount]);
-
-  const handleScriptLoad = () => {
-    setScriptCount(prev => prev + 1);
-    console.log('Script carregado:', scriptCount + 1);
-  };
 
   const startExperience = () => {
     setIsStarted(true);
@@ -136,6 +121,11 @@ export default function MindARPage() {
         <title>MindAR - Gelatomania AR</title>
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         
+        {/* Scripts necessários para MindAR carregados na ordem correta via tag script */}
+        <script src="https://aframe.io/releases/1.2.0/aframe.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/mind-ar@1.2.1/dist/mindar-image.prod.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/mind-ar@1.2.1/dist/mindar-image-aframe.prod.js"></script>
+        
         <style>{`
           body {
             margin: 0;
@@ -202,23 +192,6 @@ export default function MindARPage() {
         `}</style>
       </Head>
 
-      {/* Scripts necessários para MindAR */}
-      <Script
-        src="https://aframe.io/releases/1.2.0/aframe.min.js"
-        strategy="beforeInteractive"
-        onLoad={handleScriptLoad}
-      />
-      <Script
-        src="https://cdn.jsdelivr.net/npm/mind-ar@1.2.1/dist/mindar-image.prod.js"
-        strategy="beforeInteractive"
-        onLoad={handleScriptLoad}
-      />
-      <Script
-        src="https://cdn.jsdelivr.net/npm/mind-ar@1.2.1/dist/mindar-image-aframe.prod.js"
-        strategy="afterInteractive"
-        onLoad={handleScriptLoad}
-      />
-
       <button 
         className="back-button"
         onClick={() => {
@@ -231,64 +204,39 @@ export default function MindARPage() {
         Voltar
       </button>
 
-      {!scriptsLoaded ? (
-        <div style={{
-          display: 'flex',
-          flexDirection: 'column',
-          justifyContent: 'center',
-          alignItems: 'center',
-          height: '100vh',
-          backgroundColor: 'rgba(0,0,0,0.8)',
-          color: '#fff',
-          textAlign: 'center',
-          padding: '20px',
-          position: 'fixed',
-          top: 0,
-          left: 0,
-          right: 0,
-          bottom: 0,
-          zIndex: 1000
-        }}>
-          <h2>A carregar scripts AR...</h2>
-          <p>Por favor aguarde enquanto os scripts necessários são carregados ({scriptCount}/3)</p>
-        </div>
-      ) : (
-        <div>
-          <a-scene
-            mindar-image="imageTargetSrc: /targets/target.mind; showStats: false; uiScanning: #scanning-ui; filterMinCF: 0.001; filterBeta: 0.01; missTolerance: 5;"
-            embedded
-            color-space="sRGB"
-            renderer="colorManagement: true; physicallyCorrectLights: true; antialias: true;"
-            vr-mode-ui="enabled: false"
-            device-orientation-permission-ui="enabled: false"
-          >
-            <a-assets>
-              <a-asset-item id="gelatiModel" src="/models/GELATI.glb"></a-asset-item>
-            </a-assets>
+      <div dangerouslySetInnerHTML={{ __html: `
+        <a-scene
+          mindar-image="imageTargetSrc: /targets/target.mind; showStats: false; uiScanning: #scanning-ui; filterMinCF: 0.001; filterBeta: 0.01; missTolerance: 5;"
+          embedded
+          color-space="sRGB"
+          renderer="colorManagement: true; physicallyCorrectLights: true; antialias: true;"
+          vr-mode-ui="enabled: false"
+          device-orientation-permission-ui="enabled: false"
+        >
+          <a-assets>
+            <a-asset-item id="gelatiModel" src="/models/GELATI.glb"></a-asset-item>
+          </a-assets>
 
-            <a-camera position="0 0 0" look-controls="enabled: false"></a-camera>
+          <a-camera position="0 0 0" look-controls="enabled: false"></a-camera>
 
-            <a-entity mindar-image-target="targetIndex: 0">
-              <a-gltf-model
-                rotation="0 0 0"
-                position="0 0 0.1"
-                scale="0.5 0.5 0.5"
-                src="#gelatiModel"
-                animation="property: rotation; to: 0 360 0; loop: true; dur: 10000; easing: linear"
-              ></a-gltf-model>
-            </a-entity>
-          </a-scene>
+          <a-entity mindar-image-target="targetIndex: 0">
+            <a-gltf-model
+              rotation="0 0 0"
+              position="0 0 0.1"
+              scale="0.5 0.5 0.5"
+              src="#gelatiModel"
+              animation="property: rotation; to: 0 360 0; loop: true; dur: 10000; easing: linear"
+            ></a-gltf-model>
+          </a-entity>
+        </a-scene>
 
-          <div id="scanning-ui" className="mindar-ui-scanning">
-            <div className="inner">
-              <div className="scanline"></div>
-              <p style={{ color: 'white', fontSize: '20px', marginTop: '20px', backgroundColor: 'rgba(0,0,0,0.5)', padding: '10px', borderRadius: '5px' }}>
-                A procurar o marcador...
-              </p>
-            </div>
+        <div id="scanning-ui" class="mindar-ui-scanning">
+          <div class="inner">
+            <div class="scanline"></div>
+            <p style="color: white; font-size: 20px; margin-top: 20px; background-color: rgba(0,0,0,0.5); padding: 10px; border-radius: 5px;">A procurar o marcador...</p>
           </div>
         </div>
-      )}
+      `}} />
     </>
   );
 } 
